@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>670</width>
+    <width>822</width>
     <height>460</height>
    </rect>
   </property>
@@ -18,23 +18,13 @@
     <rect>
      <x>10</x>
      <y>70</y>
-     <width>650</width>
+     <width>801</width>
      <height>341</height>
     </rect>
    </property>
    <property name="title">
     <string>Comunicação com a Porta</string>
    </property>
-   <widget class="QPlainTextEdit" name="pTEditCommand">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>60</y>
-      <width>291</width>
-      <height>241</height>
-     </rect>
-    </property>
-   </widget>
    <widget class="QPushButton" name="pbSendCommand">
     <property name="geometry">
      <rect>
@@ -61,8 +51,8 @@
    <widget class="QPushButton" name="pBCommandClean">
     <property name="geometry">
      <rect>
-      <x>490</x>
-      <y>270</y>
+      <x>10</x>
+      <y>310</y>
       <width>80</width>
       <height>21</height>
      </rect>
@@ -71,17 +61,68 @@
      <string>Limpar</string>
     </property>
    </widget>
-   <widget class="QToolButton" name="toolbtPic">
+   <widget class="QScrollArea" name="slAreaQlineEdit">
     <property name="geometry">
      <rect>
-      <x>310</x>
+      <x>10</x>
+      <y>59</y>
+      <width>511</width>
+      <height>241</height>
+     </rect>
+    </property>
+    <property name="widgetResizable">
+     <bool>true</bool>
+    </property>
+    <widget class="QWidget" name="scrollAreaWidgetContents">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>509</width>
+       <height>239</height>
+      </rect>
+     </property>
+     <widget class="QPlainTextEdit" name="pTEditCommand">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>491</width>
+        <height>221</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>9</pointsize>
+       </font>
+      </property>
+     </widget>
+    </widget>
+   </widget>
+   <widget class="QLabel" name="qlabelPic">
+    <property name="geometry">
+     <rect>
+      <x>530</x>
       <y>60</y>
-      <width>320</width>
-      <height>240</height>
+      <width>261</width>
+      <height>241</height>
      </rect>
     </property>
     <property name="text">
-     <string>Image</string>
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbGetPic">
+    <property name="geometry">
+     <rect>
+      <x>580</x>
+      <y>30</y>
+      <width>80</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Get PIC</string>
     </property>
    </widget>
   </widget>
@@ -150,22 +191,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>toolbtPic</sender>
-   <signal>clicked()</signal>
-   <receiver>MSerialPort</receiver>
-   <slot>getOnePic()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>479</x>
-     <y>249</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>334</x>
-     <y>229</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>tBOpenPort</sender>
    <signal>clicked()</signal>
    <receiver>MSerialPort</receiver>
@@ -181,10 +206,43 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pBCommandClean</sender>
+   <signal>clicked()</signal>
+   <receiver>MSerialPort</receiver>
+   <slot>runCleanArea()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>59</x>
+     <y>390</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>410</x>
+     <y>229</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbGetPic</sender>
+   <signal>clicked()</signal>
+   <receiver>MSerialPort</receiver>
+   <slot>getOnePic()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>629</x>
+     <y>110</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>410</x>
+     <y>229</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>sendCommand()</slot>
   <slot>getOnePic()</slot>
   <slot>runConnect()</slot>
+  <slot>runCleanArea()</slot>
  </slots>
 </ui>

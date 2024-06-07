@@ -1,6 +1,8 @@
 #include "mserialport.h"
 #include "ui_mserialport.h"
 
+using namespace std;
+
 MSerialPort::MSerialPort(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::MSerialPort)
@@ -41,14 +43,16 @@ void MSerialPort::openSerialPort()
 
 void MSerialPort::writeData(const QByteArray &data)
 {
-    serial->write(data);
+    serial->write(data, data.length());
 }
 
 void MSerialPort::readData()
 {
     QByteArray data = serial->readAll();
+    QString qstr_data = QString(data);
+    ui->pTEditCommand->insertPlainText(qstr_data);
 
-    qDebug() << data;
+    qDebug() << qstr_data;
 }
 
 /***
@@ -56,7 +60,19 @@ void MSerialPort::readData()
  **/
 void MSerialPort::sendCommand()
 {
-    qDebug() << "Sending Command....";
+    QByteArray data;
+
+    QString strData = ui->leCommand->text();
+
+    data = strData.toLatin1();
+
+    if(serial->isReadable()){
+        serial->write(data);
+        qDebug() << "Sending Command...." << strData;
+        ui->pTEditCommand->insertPlainText(strData);
+    }else{
+        qDebug() << "Port is not Opened to Write....";
+    }
 }
 
 /**
@@ -65,7 +81,73 @@ void MSerialPort::sendCommand()
  */
 void MSerialPort::getOnePic()
 {
-    qDebug() << "Getting one Pic....";
+    QString strData = ui->pTEditCommand->toPlainText();
+    QString dataToPic;
+    bool startRead =false;
+
+
+    for (QChar a: strData) {
+        if(a == 64)
+            startRead = true;
+        if(a == 35)
+            startRead = false;
+
+        if(a == 10 || a == 13 || a == 64 || a == 35){
+            qDebug() << "Ignore char a --->> " << a;
+        }else{
+
+            if(startRead == true) dataToPic.append(a);
+        }
+
+        qDebug() << "Char --->> " << a;
+
+    }
+
+    qDebug() << "Data to Pic --->> " << dataToPic;
+
+    QByteArray data = QByteArray::fromHex(dataToPic.toLatin1());
+
+    //qDebug() << data;
+
+    QPixmap mpixmap(320,240);
+    //QPixmap::scaled(const QSize &size, Qt::AspectRatioMode aspectRatioMode = Qt::IgnoreAspectRatio, Qt::TransformationMode transformMode = Qt::FastTransformation);
+
+   // mpixmap.fill(QColor("white"));
+
+    mpixmap.loadFromData(data);
+    ui->qlabelPic->setPixmap(mpixmap);
+    //  ui->mylabel->setText("Hello World");
+    ui->qlabelPic->show();
+
+
+    // string strStdData = strData.toStdString();
+    // cout << strStdData << endl;
+
+    // for (char a : strStdData) {
+    //     cout << "-->>" << "Char: [";
+    //     cout << a;
+    //     cout << " ]";
+    //     //
+    //     cout << " Dec: [";
+    //     cout << dec << (int) a;
+    //     cout << "] " << " \t";
+    //     //
+    //     cout << "Hex: [";
+    //     cout << hex << (int) a;
+    //     cout << "]  " << "\n";
+    // }
+
+    // for (QChar a : strData) {
+    //     //qDebug() << "Chars: -->> " << a;
+
+    //     if (a == 10 || a == 13 ) {
+    //         qDebug() << "Has Special Chars" << a;
+    //         qDebug() << "Has Special Chars" << a.toLatin1();
+    //     }
+    //     // myImgStr.append(a);
+
+    // }
+    //qDebug() << "Getting one Pic...." << strData;
 }
 
 /**
@@ -75,7 +157,17 @@ void MSerialPort::getOnePic()
 void MSerialPort::runConnect()
 {
     qDebug() << "Connecting to Serial Port....";
-   // openSerialPort();
+    openSerialPort();
+    if(serial->isOpen()){
+        ui->lineEditStatus->setText("The Port is Opened...");
+    }else{
+        ui->lineEditStatus->setText("The Port is Closed...");
+    }
+}
+
+void MSerialPort::runCleanArea()
+{
+   ui->pTEditCommand->clear();
 }
 
 

@@ -7,6 +7,9 @@
 #include <QSerialPort>
 #include <QSerialPortInfo>
 #include <QObject>
+#include <QFont>
+#include <string>
+#include <iostream>
 
 namespace Ui {
 class MSerialPort;
@@ -31,6 +34,7 @@ private slots:
      void sendCommand();
      void getOnePic();
      void runConnect();
+     void runCleanArea();
 
 private:
     QSerialPort * serial = nullptr;
