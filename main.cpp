@@ -2,6 +2,7 @@
 #include <QApplication>
 #include <QtWidgets/QLabel>
 #include "mserialport.h"
+#include "fileutil/fileutil.h"
 
 QT_USE_NAMESPACE
 
@@ -21,6 +22,8 @@ int main(int argc, char *argv[])
 //            serial.close();
 //    }
 
+    FileUtil file_util;
+    file_util.saveImgToVideo();
 
     MSerialPort mserial;
     mserial.show();

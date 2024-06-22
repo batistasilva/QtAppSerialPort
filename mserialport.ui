@@ -115,14 +115,40 @@
    <widget class="QPushButton" name="pbGetPic">
     <property name="geometry">
      <rect>
-      <x>580</x>
+      <x>560</x>
       <y>30</y>
-      <width>80</width>
-      <height>21</height>
+      <width>100</width>
+      <height>20</height>
      </rect>
     </property>
     <property name="text">
-     <string>Get PIC</string>
+     <string>Save to Image</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbSaveToVideo">
+    <property name="geometry">
+     <rect>
+      <x>670</x>
+      <y>30</y>
+      <width>100</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Save to Video</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pbStopSaveToVideo">
+    <property name="geometry">
+     <rect>
+      <x>589</x>
+      <y>310</y>
+      <width>120</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Stop Save to Video</string>
     </property>
    </widget>
   </widget>
@@ -226,7 +252,7 @@
    <sender>pbGetPic</sender>
    <signal>clicked()</signal>
    <receiver>MSerialPort</receiver>
-   <slot>getOnePic()</slot>
+   <slot>saveToImage()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>629</x>
@@ -238,11 +264,45 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pbSaveToVideo</sender>
+   <signal>clicked()</signal>
+   <receiver>MSerialPort</receiver>
+   <slot>saveToVideo()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>729</x>
+     <y>109</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>410</x>
+     <y>229</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbStopSaveToVideo</sender>
+   <signal>clicked()</signal>
+   <receiver>MSerialPort</receiver>
+   <slot>stopSaveToVideo()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>658</x>
+     <y>389</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>410</x>
+     <y>229</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>sendCommand()</slot>
-  <slot>getOnePic()</slot>
   <slot>runConnect()</slot>
   <slot>runCleanArea()</slot>
+  <slot>saveToImage()</slot>
+  <slot>saveToVideo()</slot>
+  <slot>stopSaveToVideo()</slot>
  </slots>
 </ui>
